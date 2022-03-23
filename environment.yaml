@@ -1,4 +1,4 @@
-name: py37
+name: c-scale-gww
 channels:
   - conda-forge
   - pyviz
@@ -8,6 +8,7 @@ dependencies:
   - google-cloud-storage
   - geoviews
   - geemap
+  - h5netcdf
   - hvplot
   - jupyterlab
   - matplotlib
