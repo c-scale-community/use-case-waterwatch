@@ -19,6 +19,7 @@ dependencies:
   - rasterio
   - rioxarray
   - shapely<1.8.0  # No warnings for cartopy
+  - scikit-image
   - pip:
     - openeo
     - eepackages
