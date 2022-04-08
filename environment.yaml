@@ -5,6 +5,7 @@ channels:
 dependencies:
   - cartopy
   - earthengine-api
+  - fiona
   - google-cloud-storage
   - geoviews
   - geemap
