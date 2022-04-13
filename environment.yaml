@@ -3,6 +3,7 @@ channels:
   - conda-forge
   - pyviz
 dependencies:
+  - bottleneck
   - cartopy
   - earthengine-api
   - fiona

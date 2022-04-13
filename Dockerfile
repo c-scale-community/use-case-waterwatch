@@ -20,6 +20,8 @@ RUN apt-get update -y && apt-get install -y \
 RUN mamba env update --name base --file environment.yaml --prune \
  && rm environment.yaml
 
+RUN jupyter labextension install jupyter-matplotlib
+
 RUN echo "c.NotebookApp.iopub_data_rate_limit = 10000000" >> /home/jovyan/.jupyter/jupyter_notebook_config.py
 RUN echo "c.NotebookApp.iopub_msg_rate_limit = 100000" >> /home/jovyan/.jupyter/jupyter_notebook_config.py
 

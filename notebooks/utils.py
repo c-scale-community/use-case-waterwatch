@@ -2,12 +2,12 @@ import os
 from pathlib import Path
 from typing import List, Optional, Union
 
+# Otherwise proj bugs out
+os.environ["PROJ_LIB"] = "/opt/conda/share/proj"
+
 import fiona
 from google.cloud.storage import Blob, Bucket, Client
 from shapely.geometry import MultiPolygon, Polygon
-
-# Otherwise proj bugs out
-os.environ["PROJ_LIB"] = "/opt/conda/share/proj"
 
 
 class Reservoir:

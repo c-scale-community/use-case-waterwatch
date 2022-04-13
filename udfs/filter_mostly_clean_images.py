@@ -7,7 +7,7 @@ from xarray import DataArray
 def apply_datacube(cube: XarrayDataCube, context: dict) -> XarrayDataCube:
     """Linear regression of a time-series DataCube.
     
-    This function assumes a DataCube with Dimension 't' as an input. This dimension is removed from the result.
+    This function assumes a DataCube with Dimension 't' as an input.
     
     Args:
         cube (XarrayDataCube): datacube to apply the udf to.
@@ -19,10 +19,6 @@ def apply_datacube(cube: XarrayDataCube, context: dict) -> XarrayDataCube:
     if not cutoff_percentile:
         cutoff_percentile = 35
     cutoff_percentile = cutoff_percentile / 100.
-
-    scale: Optional[float] = context.get("scale")
-    if not scale:
-        scale = 500
 
     score_percentile: Optional[float] = context.get("score_percentile")
     if not score_percentile:
