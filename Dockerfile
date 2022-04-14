@@ -1,7 +1,5 @@
 FROM jupyter/minimal-notebook:lab-3.2.5
 
-COPY ./environment.yaml ${HOME}/environment.yaml
-
 USER root
 
 # Apt steps
@@ -16,14 +14,19 @@ RUN apt-get update -y && apt-get install -y \
  && apt-get install google-cloud-sdk -y \
  && rm -rf /var/lib/apt/lists/*
 
+COPY ./environment.yaml ${HOME}/environment.yaml
+
 # run mambda python env update
 RUN mamba env update --name base --file environment.yaml --prune \
  && rm environment.yaml
 
 RUN jupyter labextension install jupyter-matplotlib
 
-RUN echo "c.NotebookApp.iopub_data_rate_limit = 10000000" >> /home/jovyan/.jupyter/jupyter_notebook_config.py
-RUN echo "c.NotebookApp.iopub_msg_rate_limit = 100000" >> /home/jovyan/.jupyter/jupyter_notebook_config.py
+# edit config
+RUN echo "c.NotebookApp.iopub_data_rate_limit = 10000000" >> /home/jovyan/.jupyter/jupyter_notebook_config.py \
+ && echo "c.NotebookApp.iopub_msg_rate_limit = 100000" >> /home/jovyan/.jupyter/jupyter_notebook_config.py
+
+RUN chmod 777 /home/jovyan/.config
 
 USER ${NB_UID}
 
