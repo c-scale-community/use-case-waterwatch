@@ -5,7 +5,8 @@ import numpy as np
 from xarray import DataArray
 
 def apply_datacube(cube: XarrayDataCube, context: dict) -> XarrayDataCube:
-    """Linear regression of a time-series DataCube.
+    """
+    Filter the datacube based on the quality band and the quantile of the band values.
     
     This function assumes a DataCube with Dimension 't' as an input.
     
