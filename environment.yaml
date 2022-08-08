@@ -1,13 +1,16 @@
-name: py37
+name: c-scale-gww
 channels:
   - conda-forge
   - pyviz
 dependencies:
+  - bottleneck
   - cartopy
   - earthengine-api
+  - fiona
   - google-cloud-storage
   - geoviews
   - geemap
+  - h5netcdf
   - hvplot
   - jupyterlab
   - matplotlib
@@ -18,6 +21,7 @@ dependencies:
   - rasterio
   - rioxarray
   - shapely<1.8.0  # No warnings for cartopy
+  - scikit-image
   - pip:
     - openeo
     - eepackages
