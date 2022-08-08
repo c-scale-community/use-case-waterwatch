@@ -33,6 +33,11 @@ class Reservoir:
     def geometry(self) -> Union[MultiPolygon, Polygon]:
         return self._geometry
     
+    @geometry.setter
+    def geometry(self, geometry: Union[MultiPolygon, Polygon]):
+        self._geometry = geometry
+    
+    @property
     def fid(self) -> int:
         return self._fid
     
@@ -56,9 +61,9 @@ class Reservoir:
         client: Client = Client()
         bucket: Bucket = Bucket(client, name=gcp_bucket, user_project=gcp_project)
 
-        blob: Blob = client.list_blobs(bucket, prefix="shp/reservoirs-v1.0")
-        for b in blob:
-            b.download_to_filename(out_dir / b.name.split("/")[-1])
+        blobs = client.list_blobs(bucket, prefix="shp/reservoirs-v1.0")
+        for b in blobs:
+            b.download_to_filename(out_dir / b.name.split("/")[-1], )
             
         shapes = fiona.open(out_dir / "reservoirs-v1.0.shp")
 
