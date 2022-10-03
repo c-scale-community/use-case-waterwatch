@@ -30,6 +30,9 @@ def apply_datacube(cube: XarrayDataCube, context: dict) -> XarrayDataCube:
 
     array: xr.DataArray = cube.get_array()
 
+    # delete copied bands in array (input bands dimension has to match output)
+    array = array.drop_sel({"bands": ["water", "water_fill", "total_water"]})
+
     # Need to get indexes and map to names for the incoming DataArray
     array_dim_dict = {name: i for i, name in enumerate(array.dims)}
     print(array_dim_dict)
@@ -38,7 +41,7 @@ def apply_datacube(cube: XarrayDataCube, context: dict) -> XarrayDataCube:
     wo = array.sel(bands=wo_band)
     # Also get indexes once bands has been removed
     bandless_dim_dict = {name: i for i, name in enumerate(mndwi.dims)}
-    print(f"timeless dim: {bandless_dim_dict}")
+    print(f"bandless dim: {bandless_dim_dict}")
     t_axis = bandless_dim_dict["t"]
     bands_axis = array_dim_dict["bands"]
 
