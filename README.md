@@ -18,4 +18,4 @@ build docker image:
 `docker build . -t cgww`
 
 run docker image:
-`docker run -p 8888:8888  -v ~/.config/gcloud:/home/jovyan/.config/gcloud -v $(pwd):/home/jovyan/work cgww`
+`docker run -p 8888:8888 -v ~/.config:/home/jovyan/.config -v $(pwd):/home/jovyan/work cgww`
