@@ -5,9 +5,14 @@ from typing import List, Optional, Union
 # Otherwise proj bugs out
 os.environ["PROJ_LIB"] = "/opt/conda/share/proj"
 
+import geojson
 import fiona
-from google.cloud.storage import Blob, Bucket, Client
+from google.cloud.storage import Bucket, Client
+from requests import post, Response
 from shapely.geometry import MultiPolygon, Polygon
+
+
+API_URL: str = "https://api.globalwaterwatch.earth"
 
 
 class Reservoir:
@@ -87,3 +92,47 @@ class Reservoir:
             )
 
         return list(map(process_shapes, iter(shapes)))
+
+    @classmethod
+    def from_api(
+        cls: "Reservoir",
+        feat: geojson.Feature,
+        url: str = API_URL,
+    ):
+        """
+        constructs the reservoir objects based on the bbox given:
+
+        args:
+            feat: geojson Feature
+            url: Optional url for the gww-api
+        """
+
+        geometry_url: str =  f"{url}/reservoir/geometry_fc"
+        res: Response = post(geometry_url, json=feat["geometry"], headers={
+            "accept": "application/json",
+            "Content-Type": "application/json"
+        })
+        feature_collection = geojson.FeatureCollection(res.json())
+        reservoirs: List["Reservoir"] = []
+
+        for feature in feature_collection["features"]:
+            s_type: str = feature["geometry"]["type"]
+            coords: List = feature["geometry"]["coordinates"]
+            if s_type == "MultiPolygon":
+                geometry: MultiPolygon = MultiPolygon([Polygon(c[0]) for c in coords])
+            elif s_type == "Polygon":
+                geometry: Polygon = Polygon(coords[0])
+            properties = feature["properties"]
+            reservoirs.append(
+                cls(
+                    fid=feature["id"],
+                    source_name=properties["source_name"],
+                    geometry=geometry,
+                    source_id=properties["source_id"],
+                    name=properties["name"],
+                    name_en=properties["name_en"],
+                    grand_id=properties["grand_id"]
+                )
+            )
+
+        return reservoirs
