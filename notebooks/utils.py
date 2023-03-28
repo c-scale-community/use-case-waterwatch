@@ -107,7 +107,7 @@ class Reservoir:
             url: Optional url for the gww-api
         """
 
-        geometry_url: str =  f"{url}/reservoir/geometry_fc"
+        geometry_url: str =  f"{url}/reservoir/geometry"
         res: Response = post(geometry_url, json=feat["geometry"], headers={
             "accept": "application/json",
             "Content-Type": "application/json"
