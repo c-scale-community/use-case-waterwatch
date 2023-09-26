@@ -13,10 +13,12 @@ dependencies:
   - h5netcdf
   - hvplot
   - jupyterlab
-  - matplotlib
+  - jupyterhub-singleuser
+  - jupyter_client
+  - jupyter_server
+  - matplotlib-base
   - netCDF4=1.5.8
   - pandas=1.3.*
-  - pip
   - pyproj
   - rasterio
   - rioxarray
