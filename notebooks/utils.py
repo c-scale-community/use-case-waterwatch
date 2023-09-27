@@ -65,6 +65,8 @@ class Reservoir:
 
         client: Client = Client()
         bucket: Bucket = Bucket(client, name=gcp_bucket, user_project=gcp_project)
+            
+        out_dir.mkdir(exist_ok=True)
 
         blobs = client.list_blobs(bucket, prefix="shp/reservoirs-v1.0")
         for b in blobs:
