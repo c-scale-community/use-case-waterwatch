@@ -45,7 +45,6 @@ class Reservoir:
     def from_gcp(
         cls: "Reservoir",
         out_dir: Path,
-        gcp_project: str = "global-water-watch",
         gcp_bucket: str = "global-water-watch",
     ) -> List["Reservoir"]:
         """
@@ -53,13 +52,12 @@ class Reservoir:
 
         args:
             out_dir (Path): directory where downloads are gathered.
-            gcp_project (str): Google Cloud Platform Project.
             gcp_bucket (str): Google Cloud Platform Bucket.
         """
 
         client: Client = Client.create_anonymous_client()
 
-        bucket: Bucket = Bucket(client, name=gcp_bucket, user_project=gcp_project)
+        bucket: Bucket = Bucket(client, name=gcp_bucket)
 
         blobs = client.list_blobs(bucket, prefix="shp/reservoirs-v1.0")
         for b in blobs:
