@@ -25,3 +25,4 @@ dependencies:
   - shapely<1.8.0  # No warnings for cartopy
   - scikit-image
   - openeo
+  - fiona
